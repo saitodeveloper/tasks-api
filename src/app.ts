@@ -1,24 +1,24 @@
+import * as dotenv from 'dotenv';
 import express from 'express';
-import { ApolloServer } from 'apollo-server-express';
+import { errors } from 'celebrate';
+dotenv.config();
 
 const app = express();
-const apolloServer = new ApolloServer({
-    typeDefs: `
-        type Query {
-            hello: String!
-        }
-    `,
-    resolvers: {
-        Query: {
-            hello: () => "hello world"
-        }
-    }
-});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-export {
-    app,
-    apolloServer
-}
+import board from './routes/board';
+import user from './routes/user';
+
+app.use('/v1/board', board);
+app.use('/v1/user', user)
+
+app.use(errors());
+app.use(function(err: any, _req: any, res: any, _next: any) {
+    const message = err.message;
+    const status = err.status ?? 500;
+    res.status(status).json({ message })
+});
+
+export default app
