@@ -46,5 +46,6 @@ $ npm test
 
 To execute the API:
 ```cmd
+$ npm run migrate
 $ npm start
 ```
