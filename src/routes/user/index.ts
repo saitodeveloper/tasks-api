@@ -11,8 +11,8 @@ router.post('/', celebrate({
     try {
         const { username, password, name } = req.body;
         const userRegister = new UserRegister(username, password, name);
-        const result = await UserService.createUserLogin(userRegister)
-        return res.status(201).json({ id: result.insertedId.toString() });
+        const result = await UserService.createUserLogin(userRegister);
+        return res.status(201).json({ id: result?.insertedId.toString() });
     } catch(error) {
         next(error)
     }
@@ -22,7 +22,8 @@ router.post('/login', celebrate({
     [Segments.BODY]: UserLogin.joiSchema()
 }), async function(req, res, next) {
     try {
-        const token = await UserService.loginUser(new UserLogin(req.body))
+        const { username, password } = req.body;
+        const token = await UserService.loginUser(new UserLogin(username, password));
         return res.status(200).json({ token });
     } catch(error) {
         next(error)

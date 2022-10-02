@@ -21,3 +21,11 @@ export class NotFound extends Error {
         super(message);
     }
 }
+
+export class DuplicateError extends Error {
+    status: number = 422;
+
+    constructor(message: string) {
+        super(message);
+    }
+}

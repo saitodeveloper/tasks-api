@@ -1,7 +1,6 @@
 import Joi from "joi";
 
 export class User {
-    id: string = '';
     username: string = '';
     password: string = '';
     name: string = '';
@@ -30,9 +29,9 @@ export class UserLogin {
     username: string = '';
     password: string = '';
 
-    constructor(user: any) {
-        this.username = user.username;
-        this.password = user.password;
+    constructor(username: string, password: string) {
+        this.username = username;
+        this.password = password;
     }
 
     static joiSchema = () => Joi.object({

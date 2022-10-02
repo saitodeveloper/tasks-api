@@ -28,13 +28,15 @@ $ touch .env
 
 Create these .env values for test environment.
 ```environment
-ENV=dev
 MONGO_URL=mongodb://admin:admin@localhost:27017/
 MONGO_DB=tasks_app_test
 JWT_KEY=AskToAdmin
 ```
 
-*strongly* recommend to change the `MONGO_DB` value for manual testing. 
+*strongly* recommend to change the `MONGO_DB` value for manual testing and add the value for `ENV`.
+```environment
+ENV=dev
+```
 
 Then to execute all unit and integration tests on the project execute:
 ```cmd
