@@ -1,26 +1,22 @@
 import Joi from "joi";
 
-export class Contact {
-    text: string = '';
-    type: string = '';
-}
-
 export class User {
     id: string = '';
     username: string = '';
+    password: string = '';
     name: string = '';
-    contacts: Array<Contact> = [];
+
+    constructor(username: string, password: string, name: string) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+    }
 }
 
-export class UserRegister {
-    name: string = '';
-    username: string = '';
-    password: string = '';
+export class UserRegister extends User {
 
-    constructor(user: any) {
-        this.username = user.username;
-        this.password = user.password;
-        this.name = user.name;
+    constructor(username: string, password: string, name: string) {
+        super(username, password, name);
     }
 
     static joiSchema = () => Joi.object({

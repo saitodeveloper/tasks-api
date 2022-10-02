@@ -8,30 +8,6 @@ export namespace Auth {
 
     export const generateToken = (obj: any) => jwt.sign(obj, privateKey, { expiresIn: '1h' })
 
-    export const generateFromToken = (token: string) => {
-        try {
-            const payload = token.split('.')[1]
-            const decoded = Buffer.from(payload, 'base64').toString();
-            const obj = JSON.parse(decoded)
-            delete obj.iat
-            delete obj.exp
-            return generateToken(obj)
-        } catch (error) {
-            return error
-        }
-    }
-
-    export const authRolesMiddleware = (list: Array<string>) => (req: any, _res: any, next: Function) => {
-        const role = req.auth.role
-        const hasRole = list.includes(role)
-    
-        if (hasRole) {
-            next()
-        } else {
-            next(new ForbidenError('Not allowed to proceed'))
-        }
-    }
-
     export const middlewareAuth = (req: any, _res: any, next: Function) => {
         try {
             const token = req.headers.authorization.split(' ')[1]

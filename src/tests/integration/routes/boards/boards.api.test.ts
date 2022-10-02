@@ -234,6 +234,17 @@ describe('Boards Services', () => {
             response.status.should.equal(200)
             response.body.users.length.should.equal(2)
         })
+
+        it('should raise error for not owned board', async () => {
+            // Act
+            const response = await request(app)
+                .patch(`/v1/board/6338d6a067fb39dc713f9b1c/user/jamespotter`)
+                .set('Accept', 'application/json')
+                .set('Authorization', `Bearer ${tokenUser1}`);
+            
+            // Assert
+            response.status.should.equal(403)
+        })
     })
 
     describe('PATCH /v1/board/:boardId/tasks/:index', () => {

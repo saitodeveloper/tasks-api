@@ -1,6 +1,6 @@
 import { Board, Task } from "./models";
 import { BoardRepository } from "./repository";
-import { NotFound } from '../../errors';
+import { NotFound, ForbidenError } from '../../errors';
 
 export namespace BoardService {
     export async function findByUsername(username: string) {
@@ -15,7 +15,7 @@ export namespace BoardService {
         const updatedObj = await BoardRepository.addUser(boardId, owner, username);
 
         if (!updatedObj?.lastErrorObject?.updatedExisting) {
-            throw new NotFound("Can't add user to board");
+            throw new ForbidenError("Can't add user to this board");
         }
 
         const json = updatedObj?.value as any;

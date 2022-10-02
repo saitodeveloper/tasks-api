@@ -9,7 +9,9 @@ router.post('/', celebrate({
     [Segments.BODY]: UserRegister.joiSchema()
 }), async function(req, res, next) {
     try {
-        const result = await UserService.createUserLogin(new UserRegister(req.body))
+        const { username, password, name } = req.body;
+        const userRegister = new UserRegister(username, password, name);
+        const result = await UserService.createUserLogin(userRegister)
         return res.status(201).json({ id: result.insertedId.toString() });
     } catch(error) {
         next(error)
