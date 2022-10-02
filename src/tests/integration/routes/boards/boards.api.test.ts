@@ -81,7 +81,7 @@ describe('Boards Services', () => {
             response.body.length.should.equal(1)
         })
 
-        it('should get boards by other user then the owner', async () => {
+        it('should get boards by included user then the owner', async () => {
             // Arrange
             const board = boardFixture.validObject();
             const boardResponse = await request(app)
